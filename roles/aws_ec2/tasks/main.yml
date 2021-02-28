@@ -1,0 +1,85 @@
+---
+# task file for aws_ec2
+
+- name: Launching security group.
+  amazon.aws.ec2_group:
+    name: Kubernetes_cluster_sg
+    region: "{{ region }}" 
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"          
+    description: Kubernetes_cluster_security_group
+    vpc_id: "{{ vpc_id }}"
+    state: present
+    tags:
+      K8S_sg: security_group_K8S_cluster
+    rules:
+      - proto: all
+        cidr_ip: "{{ cidr_sg_ips }}"
+        rule_desc: allow all trafic     
+  register: security_group_k8s
+
+- name: Launcing Master instances.
+  ec2_instance:
+    region: "{{ region }}" 
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    name: "K8S_Master"
+    key_name: "{{ K8S_key_name }}"
+    instance_type: "{{ inst_type }}"
+    image_id: "{{ img_id }}"
+    security_group: "{{ security_group_k8s['group_id'] }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    network:
+        assign_public_ip: true
+    state: present
+    tags:
+        K8S : master
+        Kube : cluster
+    wait: yes
+  async: 180
+  poll: 0  
+
+
+- name: Launcing Worker1 instances.
+  ec2_instance:
+    region: "{{ region }}" 
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    name: "K8S_Worker1"
+    key_name: "{{ K8S_key_name }}"
+    instance_type: "{{ inst_type }}"
+    image_id: "{{ img_id }}"
+    security_group: "{{ security_group_k8s['group_id'] }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    network:
+        assign_public_ip: true
+    state: present
+    tags:
+        K8S : worker
+        slave: worker1
+        Kube: cluster
+    wait: yes
+  async: 180
+  poll: 0  
+
+
+- name: Launcing Worker2 instances.
+  ec2_instance:
+    region: "{{ region }}" 
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    name: "K8S_Worker2"
+    key_name: "{{ K8S_key_name }}"
+    instance_type: "{{ inst_type }}"
+    image_id: "{{ img_id }}"
+    security_group: "{{ security_group_k8s['group_id'] }}"
+    vpc_subnet_id: "{{ subnet_id }}"
+    network:
+        assign_public_ip: true
+    state: present
+    tags:
+        K8S : worker
+        slave: worker2
+        Kube: cluster
+    wait: yes
+

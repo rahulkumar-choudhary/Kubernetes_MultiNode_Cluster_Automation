@@ -1,0 +1,18 @@
+---
+# vars file for aws_ec2
+
+K8S_key_name: "aws_key"  #
+inst_type: "t2.micro"
+subnet_id: "subnet-ID" #
+region: "ap-south-1" #
+img_id: "ami-08e0ca9924195beba"
+
+#security group
+vpc_id: "vpc-ID" #
+
+# Good practice: put in ansible-vault
+access_key: "XXXXXXXXXXXXXXXXXX"
+secret_key: "XXXXXXXXXXXXXXXXXX"
+
+#Security_group
+cidr_sg_ips: "0.0.0.0/0"

@@ -1,0 +1,12 @@
+---
+- hosts: ["tag_K8S_master"]
+  roles:
+    - name: master setup
+      role: master
+
+- hosts: ["tag_K8S_worker"]
+  roles:
+    - name: worker setup
+      role: worker
+
+...      

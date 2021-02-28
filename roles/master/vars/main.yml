@@ -1,0 +1,41 @@
+---
+# vars file for master
+
+packages:
+    - kubeadm
+    - kubelet
+    - kubectl
+    - iproute-tc
+    - docker
+    - python3
+    - python-pip
+
+librarie_names:
+    - boto
+    - boto3
+
+
+services:
+    - docker
+    - kubelet
+
+
+doc_daemon: |
+    {
+        "exec-opts": ["native.cgroupdriver = systemd"]
+    } 
+
+#To Change the --port-network-cidr [will be updated soon] &
+#Master public IP for user Fluent experience [will be updated soon]
+kube_init: "kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=NumCPU   --ignore-preflight-errors=Mem  --node-name=master"
+
+#kubectl flannel command
+kube_flannel: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+
+
+#remove mater_token.fact file if it is already present or else fetch module wont work [Bug]
+#update the dest location if you put the automation file in different location. 
+#EXAMPLE: [/root/<dir>/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files] 
+fetch_dest_dir: /root/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/
+
+...

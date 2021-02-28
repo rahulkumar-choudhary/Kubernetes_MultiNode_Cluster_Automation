@@ -1,0 +1,44 @@
+---
+# vars file for worker
+
+packages:
+    - kubeadm
+    - kubelet
+    - kubectl
+    - iproute-tc
+    - docker
+    - python3
+    - python-pip
+
+librarie_names:
+    - boto
+    - boto3
+
+
+services:
+    - docker
+    - kubelet
+
+
+doc_daemon: |
+    {
+        "exec-opts": ["native.cgroupdriver = systemd"]
+    } 
+
+k8s_conf: |
+    net.bridge.bridge-nf-call-ip6tables=1
+    net.bridge.bridge-nf-call-iptables=1 
+
+
+#update the src location if you put the automation file in different location. 
+#EXAMPLE:  [/root/<dir>/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/master_token.fact] 
+copy_src_dir: /root/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/master_token.fact    
+
+
+
+#Token command fact 
+join: "{{ ansible_facts['ansible_local']['master_token']['worker_token_cmd']['token_cmd'] }}"
+
+
+
+...

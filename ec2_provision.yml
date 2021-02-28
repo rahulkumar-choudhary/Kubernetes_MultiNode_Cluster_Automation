@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  become: False
+  roles:
+    - name: aws_ec2 setup
+      role: aws_ec2
+
+#[WARNING]: Could not match supplied host pattern, ignoring: worker_node
+
+...

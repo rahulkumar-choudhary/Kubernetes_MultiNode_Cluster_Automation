@@ -1,0 +1,10 @@
+---
+# handlers file for worker
+
+- name: Restart docker services
+  service:
+    name: docker
+    state: restarted
+    enabled: yes  
+
+... 

@@ -1,0 +1,72 @@
+#!/usr/bin/python3
+
+#NOTE: Run run_script_one file in the /Kubernetes_MultiNode_Cluster_Automation directory only. 
+
+'''
+NOTE: This script assumes Ansible is being executed where the environment variables needed for Boto have already been set.
+
+Run following commands manually in command line terminal to set environment variables needed for boto.
+
+export AWS_ACCESS_KEY_ID='XXXXXXXXXXXXXXXXXX'
+export AWS_SECRET_ACCESS_KEY='XXXXXXXXXXXXXXXXXX'
+export AWS_REGION='ap-south-1'
+
+
+#NOTE: make sure the .pem file is present in the ./aws_key_pem file.
+
+'''
+
+import os
+
+#prerequsits.
+os.system("ansible-playbook  system_requirment.yml")
+
+#make file executable.
+os.system("chmod +x ./dynamic/ec2.py")
+os.system("chmod +x ./dynamic/ec2.ini")
+
+#permission of key 400 & mention its path in ansible conf file.
+#os.system("chmod 400 ./aws_key_pem/<File_Name>.pem")
+#NOTE: make sure the .pem file is present in the ./aws_key_pem file
+
+#Update the [name].pem file name here .
+os.system("chmod 400 ./aws_key_pem/[name].pem")
+print()
+
+
+import pyfiglet 
+
+print()
+print()
+
+Starting = pyfiglet.figlet_format("Starting  Automation  ", font = "digital" ) 
+print(Starting)
+
+print()
+print()
+
+Starting_part1 = pyfiglet.figlet_format("Provisioning  Ec2  Instances", font = "digital" ) 
+print(Starting_part1)
+print()
+os.system("ansible-playbook  ec2_provision.yml")
+
+print()
+print()
+
+Starting_part1 = pyfiglet.figlet_format("Kubernetes  Multi-Node  Cluster  Setup", font = "digital" ) 
+print(Starting_part1)
+print()
+os.system("ansible-playbook  K8S_Cluster_setup.yml")
+
+print()
+print()
+
+
+complete = pyfiglet.figlet_format("Done !", font = "slant"  ) 
+print(complete)
+print()
+
+#update directory name here if you clone in different place.
+#os.system("rm -rf /root/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/master_token.fact")
+
+
