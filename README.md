@@ -20,7 +20,7 @@ By default as in aws_ec2 role only two worker node are launched but you can laun
 *   Update the value of the name of your [name].pem file in two files:
   *  `run_script_one` file:
   ```bash
-  os.system("chmod 400 ./aws_key_pem/[name].pem")
+  "chmod 400 ./aws_key_pem/[name].pem"
   ```
 
   *   `ansible.cfg` file:
