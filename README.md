@@ -86,8 +86,9 @@ EXAMPLE:  `/root/<dir>/Kubernetes_MultiNode_Cluster_Automation/roles/worker/file
 
 #### Finally Run the script:
 This will run all the playbook automatically so, no need to run `ansible-playbook` command.
+Run command in terminal
 ```bash
-execute ./run_script_one
+./run_script_one
 ```
 
 ## OR
