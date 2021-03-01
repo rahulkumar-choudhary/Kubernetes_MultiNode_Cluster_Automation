@@ -27,7 +27,7 @@
     key_name: "{{ K8S_key_name }}"
     instance_type: "{{ inst_type }}"
     image_id: "{{ img_id }}"
-    security_group: "{{ security_group_k8s['group_id'] }}"
+    security_group: "{{ sg_id }}"
     vpc_subnet_id: "{{ subnet_id }}"
     network:
         assign_public_ip: true
@@ -49,7 +49,7 @@
     key_name: "{{ K8S_key_name }}"
     instance_type: "{{ inst_type }}"
     image_id: "{{ img_id }}"
-    security_group: "{{ security_group_k8s['group_id'] }}"
+    security_group: "{{ sg_id }}"
     vpc_subnet_id: "{{ subnet_id }}"
     network:
         assign_public_ip: true
@@ -72,7 +72,7 @@
     key_name: "{{ K8S_key_name }}"
     instance_type: "{{ inst_type }}"
     image_id: "{{ img_id }}"
-    security_group: "{{ security_group_k8s['group_id'] }}"
+    security_group: "{{ sg_id }}"
     vpc_subnet_id: "{{ subnet_id }}"
     network:
         assign_public_ip: true
