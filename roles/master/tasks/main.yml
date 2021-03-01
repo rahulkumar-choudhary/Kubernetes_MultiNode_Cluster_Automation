@@ -55,21 +55,13 @@
     path: $HOME/.kube
     state: directory
 
-#-p, --parents     no error if existing, make parent directories as needed
-#- name: Creating .kube directory
-#  shell: "mkdir -p $HOME/.kube"    
 
-  
 - name: Copying kubernetes admin.conf file to $HOME/.kube/config
   copy:
     remote_src: yes
     src: /etc/kubernetes/admin.conf 
     dest: $HOME/.kube/config
     force: yes
-
-#  -i, --interactive            prompt before overwrite (overrides a previous -n option)
-#- name: Copying kubernetes admin.conf file to $HOME/.kube/config
-#  shell: "sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config"
 
   
 - name: Changing owner permission
