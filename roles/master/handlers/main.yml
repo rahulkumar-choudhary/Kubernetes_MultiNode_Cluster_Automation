@@ -1,12 +1,3 @@
 ---
 # handlers file for master
-
-#runs at last no good. why need to figure out.
-
-- name: Restart docker services
-  service:
-    name: docker
-    state: restarted
-    enabled: yes  
-
-...    
+  
