@@ -78,7 +78,9 @@ Update the src location if you put the automation file in different location.
 
 EXAMPLE:  `/root/<dir>/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/master_token.fact`
 
-
+## Here user can use two approach 
+* `Script` 
+* `Manual` 
 
 ## Start
 
