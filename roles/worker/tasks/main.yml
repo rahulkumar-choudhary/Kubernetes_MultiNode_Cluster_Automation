@@ -1,7 +1,7 @@
 ---
 # tasks file for worker
 
-- name: Setting Kubernetes repo in all Worker nodes.
+- name: Setting Kubernetes repo in all nodes.
   yum_repository:
      name: kubernetes
      description: Kubernetes
@@ -13,18 +13,14 @@
        - https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg  https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 
 
+
 - name: Installing softwares
   yum: 
      name: "{{ item }}"
      state: present  
-  loop: "{{ packages }}" 
+  loop: "{{ packages }}"
 
-- name: Installing Required Libraries
-  pip:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ librarie_names }}" 
-
+ 
 
 - name: Starting Services
   service: 
@@ -34,11 +30,23 @@
   loop: "{{ services }}"   
 
 
+
 - name: Docker daemon.json file
   copy:
       dest: /etc/docker/daemon.json
       content: "{{ doc_daemon }}"
-  notify: Restart docker services 
+   
+
+
+- name: Restart docker services
+  service:
+    name: docker
+    state: restarted
+    enabled: yes 
+
+
+
+
 
 
 - name: Creating conf directory
@@ -46,13 +54,13 @@
       path: /etc/systl.d/
       state: directory     
 
+
+
 - name: Worker K8S conf file 
   copy: 
       dest: /etc/systl.d/k8s.conf
       content: "{{ k8s_conf }}"
 
-- name: nf call iptables.
-  shell: echo "1" > /proc/sys/net/bridge/bridge-nf-call-iptables
 
 
 - name: Creating fact directory
@@ -61,17 +69,22 @@
       state: directory    
 
  
+
 - name: Copy fact file from local to worker
   copy:
      dest: /etc/ansible/facts.d/master_token.fact
      src: "{{ copy_src_dir }}"
   ignore_errors: True
 
- #update comment. 
-
-- name: Joining worker nodes to Master node
-  shell: "{{ join }}"
-  ignore_errors: True  
 
 
-...
+- name: nf call iptables.
+  shell: echo "1" > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+ 
+# Need to trouble Shoot this part.
+#- name: Joining worker nodes to Master node
+#  shell: "{{ ansible_local['master_token']['worker_token_cmd']['token_cmd'] }}"
+#  ignore_errors: True  
+
+
