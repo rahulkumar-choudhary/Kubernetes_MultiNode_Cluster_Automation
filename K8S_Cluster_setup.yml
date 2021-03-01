@@ -8,5 +8,7 @@
   roles:
     - name: worker setup
       role: worker
-
-...      
+  tasks:
+     - name: Joining worker nodes to Master node
+       shell: "{{ ansible_local['master_token']['worker_token_cmd']['token_cmd'] }}"
+       ignore_errors: True 
