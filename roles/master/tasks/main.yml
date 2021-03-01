@@ -1,7 +1,7 @@
 ---
 # tasks file for master
 
-- name: Setting Kubernetes repo in Master Node
+- name: Setting Kubernetes repo in all nodes.
   yum_repository:
      name: kubernetes
      description: Kubernetes
@@ -13,17 +13,13 @@
        - https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg  https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 
 
+
 - name: Installing softwares
   yum: 
      name: "{{ item }}"
      state: present  
   loop: "{{ packages }}"
 
-- name: Installing Required Libraries
-  pip:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ librarie_names }}"  
  
 
 - name: Starting Services
@@ -34,21 +30,37 @@
   loop: "{{ services }}"   
 
 
+
 - name: Docker daemon.json file
   copy:
       dest: /etc/docker/daemon.json
       content: "{{ doc_daemon }}"
-  notify: Restart docker services  
+   
+
+
+- name: Restart docker services
+  service:
+    name: docker
+    state: restarted
+    enabled: yes
+
+
 
 - name: Kubeadm image pull
   shell: "kubeadm config images pull"
 
+
+
 - name: nf call iptables.
   shell: echo "1" > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+
 
 - name: Kubeadm init 
   shell: "{{ kube_init }}"
   ignore_errors: True
+
+
 
 - name: Creating .kube directory
   file:
@@ -56,6 +68,7 @@
     state: directory
 
 
+  
 - name: Copying kubernetes admin.conf file to $HOME/.kube/config
   copy:
     remote_src: yes
@@ -63,23 +76,30 @@
     dest: $HOME/.kube/config
     force: yes
 
+
   
 - name: Changing owner permission
   shell: "sudo chown $(id -u):$(id -g) $HOME/.kube/config"   
 
-#Flannel
+
+
 - name: Applying flannel in Master Node
   shell: "{{ kube_flannel }}"
+
 
 
 - name: Generating token
   shell: "kubeadm token create --print-join-command"
   register: token
 
+
+
 - name: Creating facts directory in Master Node
   file:
       path: /etc/ansible/facts.d
       state: directory
+
+
 
 - name: Creating fact file
   template: 
@@ -87,12 +107,13 @@
       dest: "/etc/ansible/facts.d/master_token.fact"  
 
 
+
 #Fetching the fact file from master to the localhost
 - name: Fetch fact file from master to local
   fetch:
-      src: /etc/ansible/facts.d/master_token.fact
       dest: "{{ fetch_dest_dir }}"
+      src: /etc/ansible/facts.d/master_token.fact
       flat: yes 
   ignore_errors: True          
 
-...
+
