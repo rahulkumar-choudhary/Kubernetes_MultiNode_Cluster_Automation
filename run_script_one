@@ -66,7 +66,8 @@ complete = pyfiglet.figlet_format("Done !", font = "slant"  )
 print(complete)
 print()
 
-#update directory name here if you clone in different place.
-#os.system("rm -rf /root/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/master_token.fact")
+#update directory name here if you clone in different directory.
+#EXAMPLE: os.system("rm -rf /root/<dir_name>/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/master_token.fact")
+os.system("rm -rf /root/Kubernetes_MultiNode_Cluster_Automation/roles/worker/files/master_token.fact")
 
 
