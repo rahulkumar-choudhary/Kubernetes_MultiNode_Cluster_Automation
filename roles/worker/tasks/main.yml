@@ -1,7 +1,7 @@
 ---
 # tasks file for worker
 
-- name: Setting Kubernetes repo in all nodes.
+- name: Setting Kubernetes repository
   yum_repository:
      name: kubernetes
      description: Kubernetes
