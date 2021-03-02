@@ -1,14 +1,12 @@
 ---
 - hosts: ["tag_K8S_master"]
+  become: true
   roles:
     - name: master setup
       role: master
 
 - hosts: ["tag_K8S_worker"]
+  become: true
   roles:
     - name: worker setup
       role: worker
-  tasks:
-     - name: Joining worker nodes to Master node
-       shell: "{{ ansible_local['master_token']['worker_token_cmd']['token_cmd'] }}"
-       ignore_errors: True 
