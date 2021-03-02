@@ -79,7 +79,7 @@
 
   
 - name: Changing owner permission
-  shell: "sudo chown $(id -u):$(id -g) $HOME/.kube/config"   
+  shell: "chown $(id -u):$(id -g) $HOME/.kube/config"   
 
 
 
