@@ -9,6 +9,21 @@ These roles have only been tested with:
 
 In addition, the roles specifically target the `RedHat OS` family, including `CentOS` and `Amazon Linux`, and may not function for other host OS's.
 
+
+## Prerequisite
+Require Ansible version 2.10.3 installed.
+
+You can create virtual environment and begin.
+
+refrence link for virtualenv setup :
+[virtual environment setup](https://rahulchoudhary5768.medium.com/install-virtualenv-and-virtualenvwrapper-for-python3-6676267c07ee "Installing virtualenv and virtualenvwrapper for Python")
+
+In that virtualenv run the following command:
+```bash
+pip3  install 'ansible==2.10.3' 
+```
+
+
 ## Getting Started
 
 This repository contains Ansible roles for Automating the Kubernetes Multi-Node Cluster on AWS cloud. Even all two worker nodes automatically join the master node.
