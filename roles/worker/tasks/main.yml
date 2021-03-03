@@ -56,7 +56,7 @@
 
 
 
-- name: Worker K8S conf file 
+- name: Worker K8S conf file configuration
   copy: 
       dest: /etc/systl.d/k8s.conf
       content: "{{ k8s_conf }}"
@@ -82,9 +82,15 @@
   shell: echo "1" > /proc/sys/net/bridge/bridge-nf-call-iptables
 
  
-# Need to trouble Shoot this part.
-#- name: Joining worker nodes to Master node
-#  shell: "{{ ansible_local['master_token']['worker_token_cmd']['token_cmd'] }}"
-#  ignore_errors: True  
+#For updating the uploaded fact information.
+- name: Re-gathering the updated facts.
+  setup:
+  register: updated_fcts
+ 
+
+- name: Joining all worker nodes to Master node
+  shell: "{{ ansible_local['master_token']['worker_token_cmd']['token_cmd'] }}"
+  ignore_errors: True  
+ 
 
 
