@@ -61,13 +61,6 @@ os.system("ansible-playbook  K8S_Cluster_setup.yml")
 print()
 print()
 
-Starting_part1 = pyfiglet.figlet_format("Joining all worker to master", font = "digital" ) 
-print(Starting_part1)
-print()
-os.system("ansible-playbook  worker_join.yml")
-
-print()
-print()
 
 complete = pyfiglet.figlet_format("Done !", font = "slant"  ) 
 print(complete)
