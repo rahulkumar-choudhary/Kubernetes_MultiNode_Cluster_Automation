@@ -1,6 +1,12 @@
 # Automation: Kubernetes Multi-Node Cluster On  AWS Cloud Using Ansible
 
 
+<p align="center">
+  <img src="https://miro.medium.com/max/875/1*borj4CAzNB3a8kixeqzqwQ.gif?raw=true" width="400" height="500" />
+</p>
+
+
+
 ## System Requirements
 These roles have only been tested with:
 * RedHat Linux `8`,`7`
