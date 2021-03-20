@@ -1,38 +1,56 @@
-Role Name
+worker
 =========
-
-A brief description of the role goes here.
+Role to setup the worker configuration in K8S_worker1 and K8S_worker2 (instance name) instance. It also automatically joins the master node and forms cluster.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+`boto` `boto3` `botocore` packages are required.
+
+Role is only tested on `ansible 2.10.3` version.
 
 Role Variables
 --------------
+```
+#update the src location if you put the automation file in different location. 
+#EXAMPLE:  [/root/<dir>/worker/files/master_token.fact] 
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+copy_src_dir: /root/<dir>/worker/files/master_token.fact
+```
 
 Dependencies
 ------------
+The master node role file you can find here 
+* [master role](https://galaxy.ansible.com/rahulkumar0909/master "master role")
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Also, if you need aws_ec2 role for launching perticular instance for master and worker role then you can find it here
+* [aws_ec2 role](https://galaxy.ansible.com/rahulkumar0909/aws_ec2 "aws_ec2 role")
+
+Joining worker node to master node is not compulsory you can also launch worker node only.
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```
+- name: Worker K8S conf file configuration
+  copy: 
+      dest: /etc/systl.d/k8s.conf
+      content: "{{ k8s_conf }}"
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Used facts to auto join worker to Master
+```
+- name: Joining all worker nodes to Master node
+  shell: "{{ ansible_local['master_token']['worker_token_cmd']['token_cmd'] }}"
+  ignore_errors: True          
+```
 
-License
--------
-
-BSD
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+### Connect me
+* [Linkedin](https://linkedin.com/in/rahulkumar-choudhary-b662761a2 "Rahulkumar Choudhary")
+* [Twitter](https://twitter.com/Rahulkumar29420 "Rahulkumar29420")
+* [Medium](https://rahulchoudhary5768.medium.com/ "Rahulkumar Choudhary")
