@@ -10,6 +10,9 @@ These roles have only been tested with:
 In addition, the roles specifically target the `RedHat OS` family, including `CentOS` and `Amazon Linux`, and may not function for other host OS's.
 
 
+### For detailed explaination read the article : [Kubernetes Multi-Node Cluster On  AWS Cloud Using Ansible](https://rahulchoudhary5768.medium.com/kubernetes-multi-node-cluster-on-top-of-aws-using-ansible-c67bae8d2a6a "Detailed Explination")
+
+
 ## Prerequisite
 Require Ansible version 2.10.3 installed.
 
