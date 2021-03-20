@@ -1,38 +1,61 @@
-Role Name
+master
 =========
-
-A brief description of the role goes here.
+Role to setup the master configuration in aws K8S_master (instance name) instance.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+`boto` `boto3` `botocore` packages are required.
+
+Role is only tested on `ansible 2.10.3` version.
 
 Role Variables
 --------------
+```
+#update the dest location of worker role file if you put the role file in different location. 
+#EXAMPLE: [/root/<dir>/worker/files] 
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+fetch_dest_dir: /root/<dir>/worker/files/
+
+#remove mater_token.fact file if it is already present or else fetch module wont work.
+```
 
 Dependencies
 ------------
+The worker node role file you can find here 
+* [worker role](https://github.com/Rahulkumar0909/Kubernetes_MultiNode_Cluster_Automation/tree/master/roles/worker "worker role")
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Also, if you need aws_ec2 role for launching perticular instance for master and worker role then you can find it here
+* [aws_ec2 role](https://galaxy.ansible.com/rahulkumar0909/aws_ec2 "aws_ec2 role")
+
+Joining worker node is not compulsory you can also launch master node only.
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```
+- name: Kubeadm init 
+  shell: "{{ kube_init }}"
+  ignore_errors: True
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Used facts to auto join worker to Master
+```
+- name: Fetch fact file from master to local
+  fetch:
+      dest: "{{ fetch_dest_dir }}"
+      src: /etc/ansible/facts.d/master_token.fact
+      flat: yes 
+  ignore_errors: True          
+```
 
-License
--------
-
-BSD
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+### Connect me
+* [Linkedin](https://linkedin.com/in/rahulkumar-choudhary-b662761a2 "Rahulkumar Choudhary")
+* [Twitter](https://twitter.com/Rahulkumar29420 "Rahulkumar29420")
+* [Medium](https://rahulchoudhary5768.medium.com/ "Rahulkumar Choudhary")
+
