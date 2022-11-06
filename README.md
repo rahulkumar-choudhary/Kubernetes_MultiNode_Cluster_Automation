@@ -132,5 +132,4 @@ ansible-playbook  K8S_Cluster_setup.yml
 
 >K8S_Cluster_setup.yml file will run first master role which will setup the Kubernetes Master node in AWS master instance and  then will run worker role which will setup worker node in AWS worker1 and worker2 instances and will automatically join all the worker nodes to master node.
 
-### Connect me
-[Here!](https://bio.link/linkrahulkumar "Rahulkumar Choudhary")
+### Connect me [Here!](https://bio.link/linkrahulkumar "Rahulkumar Choudhary")
